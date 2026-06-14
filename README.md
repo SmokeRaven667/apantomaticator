@@ -1,12 +1,28 @@
-# Prompt
+# Apantomancy
+https://en.wikipedia.org/wiki/Apantomancy
+
+# uv
+
+`uv add <package>` automatically adds dependencies to `pyproject.toml` and locks exact tree in `uv.lock`.
+
+So, the old `pip freeze > requirements.txt` is not needed.
+
+However, if `requirements.txt` is needed for Docker or hosting provider, you can generate it using:
+
+`uv export --format requirements-txt > requirements.txt`
+
+
+# Show Me Not The Money
+
+## Prompt
 
 what us the best way to learn agentic mcp loop ai programming and so forth without spending money?
 
-# Google Browser Answer
+## Google Browser Answer
 
 Build a Local Weather Investigator Agent using Python. This beginner-friendly project avoids complex code while teaching you the exact pattern of an agentic loop: AI reasons → AI calls an MCP tool → Tool returns data → AI interprets the result.You will use FastMCP (the official, highly simplified Python SDK for MCP) alongside smolagents (Hugging Face's ultra-lightweight, free-to-use agent framework).
 
-# Step 1: Set Up Your Free Environment
+## Step 1: Set Up Your Free Environment
 
 Open your terminal and run these commands to set up a virtual environment and install the required official libraries.
 
@@ -22,7 +38,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 uv add "mcp[cli]" smolagents httpx
 ```
 
-# Step 2: Write Your Custom MCP Server
+## Step 2: Write Your Custom MCP Server
 
 Create a file named `server.py`. This script explicitly exposes a Python function as a standardized AI tool using the `FastMCP` decorator.
 
@@ -56,7 +72,7 @@ if __name__ == "__main__":
     mcp.run(transport="stdio")
 ```
 
-# Step 3: Connect Your Custom Script Agent Loop
+## Step 3: Connect Your Custom Script Agent Loop
 
 Create a separate script named `agent.py`. This script starts an orchestration engine using [Hugging Face's smolagents](https://github.com/huggingface/smolagents). It boots up your custom `server.py` in the background, automatically reads the tool definitions, and hands them to the AI model.
 
@@ -73,13 +89,13 @@ server_params = StdioServerParameters(
     args=["server.py"]
 )
 
-# 2. Initialize your chosen LLM (LiteLLM dynamically loads your free API keys)
-# Ensure your environment variable is set (e.g., export ANTHROPIC_API_KEY="your-key")
+## 2. Initialize your chosen LLM (LiteLLM dynamically loads your free API keys)
+## Ensure your environment variable is set (e.g., export ANTHROPIC_API_KEY="your-key")
 model = LiteLLMModel(model_id="anthropic/claude-3-5-sonnet")
 
 print("Initializing Agent Loop and connecting MCP tools...")
 
-# 3. Open the sync communication bridge
+## 3. Open the sync communication bridge
 with mcp_sync_client(server_params) as client:
     # Read available tools directly from your server.py metadata
     mcp_tools = client.list_tools()
@@ -95,12 +111,12 @@ with mcp_sync_client(server_params) as client:
     print(response)
 ```
 
-# Step 4: Test and Troubleshoot Globally
+## Step 4: Test and Troubleshoot Globally
 
 To verify that your tools and routing pathways conform to the global protocol, test your script in the interactive web UI provided by the protocol creators:
 
 ```bash 
-run mcp dev server.py
+uv run mcp dev server.py
 ```
 
 This boots up the MCP Inspector web panel. You can manually click "Call Tool", input test coordinates, and view the precise JSON chunks exchanged behind the scenes. Once verified, run `python agent.py` to see your agent loops make autonomous calculations.
