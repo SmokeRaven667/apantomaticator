@@ -9,8 +9,14 @@ So, the old `pip freeze > requirements.txt` is not needed.
 
 However, if `requirements.txt` is needed for Docker or hosting provider, you can generate it using:
 
-`uv export --format requirements-txt > requirements.txt`
+`uv export --for
 
+# my own crawler
+
+playwright has some issues with latest ubuntu:
+
+```
+sudo apt update && sudo apt install -y chromium-browser```
 
 # Show Me Not The Money
 
